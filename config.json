@@ -1,0 +1,8 @@
+{
+  "port": 8585,
+  "cors": {
+    "allowed_origins": [],
+    "allowed_methods": ["GET", "POST", "PUT", "OPTIONS", "DELETE"],
+    "allow_credentials": false
+  }
+}
