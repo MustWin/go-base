@@ -19,3 +19,10 @@ Our tools of choice are:
 
 Dev tools:
 * https://github.com/derekparker/delve
+
+
+TODOS: 
+
+* Logging
+* Testing
+* Documentation rendering

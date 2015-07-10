@@ -1,37 +1,35 @@
 package base
 
 import (
+  "log"
+  "time"
   "net/http"
   "github.com/gorilla/mux"
   "github.com/spf13/viper"
-  "github.com/rs/cors"
-  "github.com/codegangsta/negroni"
+  //"github.com/rs/cors"
 )
 
-
-func ServeEndpoints() {
+func BuildServer(endpoints ...Endpoint) http.Handler {
   router := mux.NewRouter()
-  for _, endpoint := range EndPoints {
+  for _, endpoint := range endpoints {
     router.Methods(endpoint.GetMethod()).
            Path(endpoint.GetRoute()).
-           HandlerFunc(endpoint.GetHandler())
+           HandlerFunc(endpoint.GetHandler().ServeHTTP)
+  }
+  return router
+}
+
+func ServeEndpoints() {
+
+  server := &http.Server{
+    Addr:           "0.0.0.0:" + viper.GetString("port"),
+    Handler:        BuildServer(),
+    ReadTimeout:    10 * time.Second,
+    WriteTimeout:   10 * time.Second,
+    MaxHeaderBytes: 1 << 20,
   }
 
-  cor := cors.New(cors.Options{
-    AllowedOrigins:   viper.GetStringSlice("cors.allowed_origins"),
-    AllowedMethods:   viper.GetStringSlice("cors.allowed_methods"),
-    AllowCredentials: viper.GetBool("cors.allow_credentials"),
-  })
-
-  // TODO: make middlewares more pluggable
-
-  server := negroni.New(
-    negroni.NewStatic(http.Dir("public")),
-    cor,
-  )
-  server.UseHandler(router)
-
   // Start the server
-  server.Run("0.0.0.0:" + viper.GetString("port"))
+  log.Fatal(server.ListenAndServe())
 }
 

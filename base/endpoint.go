@@ -1,56 +1,64 @@
 package base
 
 import(
-  "net/http"
+  httptransport "github.com/go-kit/kit/transport/http"
 )
 
-type EndPoint interface {
+type Endpoint interface {
   GetRoute() string
   GetMethod() string
   GetDescription() string
   GetParameters() interface{}
   GetBody() interface{}
   GetResponses() []Response
-  GetHandler() func(http.ResponseWriter, *http.Request)
+  GetHandler() httptransport.Server
 }
 
-type BaseEndPoint struct {
+type BaseEndpoint struct {
   Route string
   Method string
   Description string
   Parameters interface{}
   Body interface{}
   Responses []Response
-  Handler func(http.ResponseWriter, *http.Request)
+  Handler httptransport.Server
 }
 
-func (ref *BaseEndPoint) GetRoute() string {
+func (ref *BaseEndpoint) GetRoute() string {
   return ref.Route
 }
-func (ref *BaseEndPoint) GetMethod() string {
+func (ref *BaseEndpoint) GetMethod() string {
   return ref.Method
 }
-func (ref *BaseEndPoint) GetDescription() string {
+func (ref *BaseEndpoint) GetDescription() string {
   return ref.Description
 }
-func (ref *BaseEndPoint) GetParameters() interface{} {
+func (ref *BaseEndpoint) GetParameters() interface{} {
   return ref.GetParameters
 }
-func (ref *BaseEndPoint) GetBody() interface{} {
+func (ref *BaseEndpoint) GetBody() interface{} {
   return ref.Body
 }
-func (ref *BaseEndPoint) GetResponses() []Response{
+func (ref *BaseEndpoint) GetResponses() []Response{
   return ref.Responses
 }
-func (ref *BaseEndPoint) GetHandler() func(w http.ResponseWriter, r *http.Request) {
+func (ref *BaseEndpoint) GetHandler() httptransport.Server {
   return ref.Handler
 }
 
-var EndPoints []EndPoint
-func AddEndPoint(endpoint EndPoint) {
+var Endpoints []Endpoint
+func RegisterEndpoints(endpoints ...Endpoint) {
   // TODO: add middlewares
+  // TODO: re-add middlewares
+  /*cor := cors.New(cors.Options{
+    AllowedOrigins:   viper.GetStringSlice("cors.allowed_origins"),
+    AllowedMethods:   viper.GetStringSlice("cors.allowed_methods"),
+    AllowCredentials: viper.GetBool("cors.allow_credentials"),
+  })*/
 
-  EndPoints = append(EndPoints, endpoint)
+  // TODO: Prevent duplicate additions
+
+  Endpoints = append(Endpoints, endpoints...)
 }
 
 
