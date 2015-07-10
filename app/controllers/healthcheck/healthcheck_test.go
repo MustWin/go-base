@@ -5,6 +5,7 @@ import (
   "os"
   "testing"
   "github.com/MustWin/go-base/test"
+  "github.com/go-kit/kit/log"
 )
 
 func TestMain(m *testing.M) {

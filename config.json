@@ -1,8 +1,9 @@
 {
-  "port": 8585,
+  "port": 8888,
   "cors": {
     "allowed_origins": [],
     "allowed_methods": ["GET", "POST", "PUT", "OPTIONS", "DELETE"],
     "allow_credentials": false
-  }
+  },
+  "log_level": "debug"
 }

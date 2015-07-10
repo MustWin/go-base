@@ -16,6 +16,7 @@ Our tools of choice are:
 * https://github.com/go-kit/kit
 * https://github.com/spf13/viper
 * https://github.com/spf13/cobra
+https://github.com/Sirupsen/logrus
 
 Dev tools:
 * https://github.com/derekparker/delve
@@ -24,5 +25,5 @@ Dev tools:
 TODOS: 
 
 * Logging
-* Testing
 * Documentation rendering
+* Tracing

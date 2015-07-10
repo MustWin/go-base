@@ -7,6 +7,7 @@ import(
   "github.com/MustWin/go-base/base"
   "github.com/MustWin/go-base/base/render"
   httptransport "github.com/go-kit/kit/transport/http"
+  log "github.com/Sirupsen/logrus"
 )
 
 
@@ -29,6 +30,7 @@ func Endpoints() []base.Endpoint {
             return nil, nil
           },
 		  Endpoint: func(ctx context.Context, req interface{}) (interface{}, error) {
+            log.Info("status","OK")
             return models.Status{"Ok"}, nil
           },
 		  EncodeFunc: func(w http.ResponseWriter, status interface{}) error {

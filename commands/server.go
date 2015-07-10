@@ -8,6 +8,7 @@ import (
 
 // Options
 var Port int
+var DebugLevel string
 
 func buildServerCommand() *cobra.Command {
   var serverCommand = &cobra.Command{
@@ -18,6 +19,8 @@ func buildServerCommand() *cobra.Command {
       app.Main()
     },
   }
+  serverCommand.Flags().StringVarP(&DebugLevel, "debug", "d", "debug", "The log level for the application")
+  viper.BindPFlag("debug", serverCommand.Flags().Lookup("debug"))
   serverCommand.Flags().IntVarP(&Port, "port", "p", 8888, "The port to listen on")
   viper.BindPFlag("port", serverCommand.Flags().Lookup("port"))
   return serverCommand

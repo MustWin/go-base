@@ -19,11 +19,11 @@ func BuildServer(endpoints ...Endpoint) http.Handler {
   return router
 }
 
-func ServeEndpoints() {
+func ServeEndpoints(endpoints []Endpoint) {
 
   server := &http.Server{
     Addr:           "0.0.0.0:" + viper.GetString("port"),
-    Handler:        BuildServer(),
+    Handler:        BuildServer(endpoints...),
     ReadTimeout:    10 * time.Second,
     WriteTimeout:   10 * time.Second,
     MaxHeaderBytes: 1 << 20,
