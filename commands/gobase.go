@@ -14,6 +14,12 @@ func BaseCommand() *cobra.Command {
     Short: "A simple production ready REST API framework",
     Long: `long usage`,
   }
+/*
+Supported environment variables include:
+- ENVIRONMENT
+*/
+  viper.AutomaticEnv()
+
   baseCommand.Flags().StringVarP(&config, "config", "c", "config.json", "The path to a configuration file")
   viper.BindPFlag("config", baseCommand.Flags().Lookup("config"))
 

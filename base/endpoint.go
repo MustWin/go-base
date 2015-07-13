@@ -48,17 +48,7 @@ func (ref *BaseEndpoint) GetHandler() httptransport.Server {
 
 var Endpoints []Endpoint
 func RegisterEndpoints(endpoints ...Endpoint) {
-  // TODO: add middlewares
-  // TODO: re-add middlewares
-  /*cor := cors.New(cors.Options{
-    AllowedOrigins:   viper.GetStringSlice("cors.allowed_origins"),
-    AllowedMethods:   viper.GetStringSlice("cors.allowed_methods"),
-    AllowCredentials: viper.GetBool("cors.allow_credentials"),
-  })*/
-
   // TODO: Prevent duplicate additions
-
   Endpoints = append(Endpoints, endpoints...)
 }
-
 

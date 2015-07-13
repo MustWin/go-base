@@ -16,6 +16,7 @@ func Initialize() {
 
   log.SetFormatter(&log.TextFormatter{})
   log.SetOutput(os.Stderr)
+
   level, err := log.ParseLevel(viper.GetString("log_level"))
   if err != nil {
     panic("Invalid log level setting")
