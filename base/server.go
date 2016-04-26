@@ -10,11 +10,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Context struct {
-	Test string
-}
-
-func BuildServer(middlewares []http.Handler, endpoints []Endpoint) http.Handler { // This function applies context-less middlewares. Ones with context will require some more work
+// BuildServer applies context-less middlewares. Ones with context will require some more work
+func BuildServer(middlewares []http.Handler, endpoints []Endpoint) http.Handler {
 	handlerChain := interpose.New()
 	for _, middle := range middlewares {
 		handlerChain.UseHandler(middle)
@@ -31,8 +28,9 @@ func BuildServer(middlewares []http.Handler, endpoints []Endpoint) http.Handler 
 	return handlerChain
 }
 
+// ServeEndpoints starts the server with the configured middleware and
+// endpoints.
 func ServeEndpoints(middlewares []http.Handler, endpoints []Endpoint) {
-
 	server := &http.Server{
 		Addr:           "0.0.0.0:" + viper.GetString("port"),
 		Handler:        BuildServer(middlewares, endpoints),

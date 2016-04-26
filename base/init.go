@@ -12,7 +12,7 @@ import (
 // Initialize the application, including logging and config
 func Initialize() {
 	rand.Seed(time.Now().UTC().UnixNano())
-	LoadConfig()
+	loadConfig()
 
 	log.SetFormatter(&log.TextFormatter{})
 

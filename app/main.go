@@ -13,14 +13,12 @@ import (
 	"github.com/MustWin/go-base/base"
 )
 
-/*
-   This is where you should initialize everything you need for your app to run
-*/
+// Main is where you should initialize everything you need for your app to run
 func Main() {
 	base.Initialize()
 
 	log.Debug("Registration complete")
-	base.ServeEndpoints(setupMiddleware(), base.Endpoints)
+	base.ServeEndpoints(setupMiddleware(), base.Endpoints())
 }
 
 func setupMiddleware() []http.Handler {

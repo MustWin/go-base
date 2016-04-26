@@ -1,9 +1,12 @@
 package base
 
 import (
+	"fmt"
+
 	httptransport "github.com/go-kit/kit/transport/http"
 )
 
+// Endpoint describes a generic endpoint defining a service.
 type Endpoint interface {
 	GetRoute() string
 	GetMethod() string
@@ -14,7 +17,8 @@ type Endpoint interface {
 	GetHandler() *httptransport.Server
 }
 
-type BaseEndpoint struct {
+// DefaultEndpoint is the standard base Endpoint implementation.
+type DefaultEndpoint struct {
 	Route       string
 	Method      string
 	Description string
@@ -24,31 +28,60 @@ type BaseEndpoint struct {
 	Handler     *httptransport.Server
 }
 
-func (ref *BaseEndpoint) GetRoute() string {
+// GetRoute returns the Route
+func (ref *DefaultEndpoint) GetRoute() string {
 	return ref.Route
 }
-func (ref *BaseEndpoint) GetMethod() string {
+
+// GetMethod returns the Method
+func (ref *DefaultEndpoint) GetMethod() string {
 	return ref.Method
 }
-func (ref *BaseEndpoint) GetDescription() string {
+
+// GetDescription returns the Description
+func (ref *DefaultEndpoint) GetDescription() string {
 	return ref.Description
 }
-func (ref *BaseEndpoint) GetParameters() interface{} {
+
+// GetParameters returns the Parameters
+func (ref *DefaultEndpoint) GetParameters() interface{} {
 	return ref.GetParameters
 }
-func (ref *BaseEndpoint) GetBody() interface{} {
+
+// GetBody returns the Body
+func (ref *DefaultEndpoint) GetBody() interface{} {
 	return ref.Body
 }
-func (ref *BaseEndpoint) GetResponses() []Response {
+
+// GetResponses returns the slice of Response
+func (ref *DefaultEndpoint) GetResponses() []Response {
 	return ref.Responses
 }
-func (ref *BaseEndpoint) GetHandler() *httptransport.Server {
+
+// GetHandler returns the Handler
+func (ref *DefaultEndpoint) GetHandler() *httptransport.Server {
 	return ref.Handler
 }
 
-var Endpoints []Endpoint
+var registeredEndpoints map[string]Endpoint
 
+// RegisterEndpoints adds the given endpoints to the registry of
+// endpoints.
 func RegisterEndpoints(endpoints ...Endpoint) {
-	// TODO: Prevent duplicate additions
-	Endpoints = append(Endpoints, endpoints...)
+	for _, endpoint := range endpoints {
+		if endpoint == nil {
+			continue
+		}
+		key := fmt.Sprintf("%s-%s", endpoint.GetRoute(), endpoint.GetMethod())
+		registeredEndpoints[key] = endpoint
+	}
+}
+
+// Endpoints returns the list of registered Endpoints
+func Endpoints() []Endpoint {
+	endpoints := []Endpoint{}
+	for _, endpoint := range registeredEndpoints {
+		endpoints = append(endpoints, endpoint)
+	}
+	return endpoints
 }

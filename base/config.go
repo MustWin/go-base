@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig() {
+func loadConfig() {
 	viper.SetConfigName("config")
 	viper.ReadInConfig()
 }

@@ -1,23 +1,31 @@
 package base
 
+// Response describes the minimal interface of web responses.
 type Response interface {
 	GetCode() int
 	GetDescription() string
 	GetResponseType() interface{}
 }
 
-type BaseResponse struct {
+// DefaultResponse implements Response interface.
+type DefaultResponse struct {
 	Code         int
 	Description  string
 	ResponseType interface{}
 }
 
-func (ref *BaseResponse) GetCode() int {
+// GetCode returns the HTTP response code.
+func (ref *DefaultResponse) GetCode() int {
 	return ref.Code
 }
-func (ref *BaseResponse) GetDescription() string {
+
+// GetDescription returns the text description of the response code.
+func (ref *DefaultResponse) GetDescription() string {
 	return ref.Description
 }
-func (ref *BaseResponse) GetResponseType() interface{} {
+
+// GetResponseType returns a generic interface{} corresponding to
+// the response type.
+func (ref *DefaultResponse) GetResponseType() interface{} {
 	return ref.ResponseType
 }
