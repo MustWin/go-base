@@ -1,8 +1,8 @@
 package render
 
 import (
-  "net/http"
-  "encoding/json"
+	"encoding/json"
+	"net/http"
 )
 
 func JsonResponse(w http.ResponseWriter, responseBodyObj interface{}) {

@@ -1,25 +1,28 @@
 package base
 
 import (
-  "math/rand"
-  "os"
-  "time"
-  "github.com/spf13/viper"
-  log "github.com/Sirupsen/logrus"
+	"fmt"
+	"math/rand"
+	"time"
+
+	log "github.com/Sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
-
-
+// Initialize the application, including logging and config
 func Initialize() {
-  rand.Seed(time.Now().UTC().UnixNano())
-  LoadConfig()
+	rand.Seed(time.Now().UTC().UnixNano())
+	LoadConfig()
 
-  log.SetFormatter(&log.TextFormatter{})
-  log.SetOutput(os.Stderr)
+	log.SetFormatter(&log.TextFormatter{})
 
-  level, err := log.ParseLevel(viper.GetString("log_level"))
-  if err != nil {
-    panic("Invalid log level setting")
-  }
-  log.SetLevel(level)
+	ll := viper.GetString("log_level")
+	if ll == "" {
+		ll = "debug"
+	}
+	level, err := log.ParseLevel(ll)
+	if err != nil {
+		panic(fmt.Sprintf("Invalid log level setting: %v", err))
+	}
+	log.SetLevel(level)
 }

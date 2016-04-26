@@ -1,6 +1,6 @@
 #!/bin/bash
 
-src_folders="app base commands core test"
+src_folders="app base commands test"
 
 # Perform import group checking and ordering
 goimports -w ${src_folders}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-src_folders="app base commands core test"
+src_folders="app base commands test"
 packages=$(for s in ${src_folders}; do echo -e "./$s/..."; done)
 
 VERSION=$(go version | awk '{print $3}')

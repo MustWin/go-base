@@ -1,10 +1,10 @@
 package base
 
 import (
-  "github.com/spf13/viper"
+	"github.com/spf13/viper"
 )
 
 func LoadConfig() {
-  viper.SetConfigName("config")
-  viper.ReadInConfig()
+	viper.SetConfigName("config")
+	viper.ReadInConfig()
 }

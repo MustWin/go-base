@@ -1,5 +1,5 @@
 package models
 
 type Status struct {
-  Status string
+	Status string
 }
